@@ -35,7 +35,7 @@ fun UnidadeCurricularScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val errorMessage = uiState.errorMessage
 
-    LaunchedEffect() { viewModel.carregar() }
+    LaunchedEffect(Unit) { viewModel.carregar() }
 
     when{
         uiState.isLoading ->{
