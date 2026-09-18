@@ -1,10 +1,10 @@
 package com.rafaelcosta.carteirinhadigital2devest_b.feature.unidadecurriculares.data.repository
 
-import android.net.http.HttpException
 import com.rafaelcosta.carteirinhadigital2devest_b.feature.unidadecurriculares.data.remote.service.UnidadeCurricularApi
 import com.rafaelcosta.carteirinhadigital2devest_b.feature.unidadecurriculares.domain.model.UnidadeCurricular
 import com.rafaelcosta.carteirinhadigital2devest_b.feature.unidadecurriculares.domain.repository.UnidadeCurricularRepository
 import okio.IOException
+import retrofit2.HttpException
 
 class ApiUnidadeCurricularRepositoryImpl(
     private val api: UnidadeCurricularApi
