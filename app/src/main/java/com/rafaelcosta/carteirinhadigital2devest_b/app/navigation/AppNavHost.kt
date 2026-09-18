@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.rafaelcosta.carteirinhadigital2devest_b.app.di.AppContainer
@@ -31,27 +30,34 @@ fun AppNavHost(
 ) {
     val usuarioLogado by sessionViewModel.usuarioLogado.collectAsStateWithLifecycle()
     val usuario = usuarioLogado
+
     NavHost(
         navController = navController,
         startDestination = Routes.Login.route
     ) {
         composable(Routes.Login.route) {
+
             LoginScreen(
                 navController = navController,
                 onLoginSucesso = { usuario ->
+                    container.authTokenStore.setToken(usuario.token)
                     sessionViewModel.setUsuarioLogado(usuario)
                     navController.navigate(Routes.HomeAluno.route)
                 }
             )
         }
+
         composable(Routes.Carteirinha.route) {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
                 CarteirinhaScreen(
                     modifier = Modifier.padding(innerPadding)
                 )
             }
         }
+
         composable(Routes.HomeAluno.route) {
+
             if (usuario == null) {
                 LaunchedEffect(Unit) {
                     navController.navigate(Routes.Login.route)
@@ -65,11 +71,14 @@ fun AppNavHost(
                 }
             }
         }
+
         composable(Routes.UCAluno.route) {
+
             if (usuario == null) {
                 LaunchedEffect(Unit) {
                     navController.navigate(Routes.Login.route)
                 }
+
             } else {
                 val unidadeCurricularFactory = remember(
                     container.unidadeCurricularRepository
@@ -78,13 +87,17 @@ fun AppNavHost(
                         repository = container.unidadeCurricularRepository
                     )
                 }
-                val unidadeCurricularViewModel: UnidadeCurricularViewModel =
-                    viewModel(factory = unidadeCurricularFactory)
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                val unidadeCurricularViewModel: UnidadeCurricularViewModel = viewModel(
+                    factory = unidadeCurricularFactory
+                )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ) { innerPadding ->
+
                     UnidadeCurricularScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = unidadeCurricularViewModel
+                        modifier =Modifier.padding(innerPadding),
+                        viewModel =unidadeCurricularViewModel
                     )
                 }
             }
